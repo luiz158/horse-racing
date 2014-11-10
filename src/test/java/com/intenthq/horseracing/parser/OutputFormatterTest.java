@@ -6,14 +6,9 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static java.util.Collections.sort;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by antmyth on 10/11/14.
- */
 public class OutputFormatterTest {
 
     @Test
@@ -36,7 +31,6 @@ public class OutputFormatterTest {
                 .put(2, horse2)
                 .build();
     }
-
 }
 
 

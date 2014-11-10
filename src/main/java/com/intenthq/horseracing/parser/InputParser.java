@@ -6,7 +6,6 @@ import com.intenthq.horseracing.entities.Play;
 import com.intenthq.horseracing.entities.RaceHorse;
 import com.intenthq.horseracing.exceptions.InputParsingException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +14,6 @@ import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.Integer.valueOf;
 
-/**
-* Created by antmyth on 10/11/14.
-*/
 public class InputParser {
     private static final Splitter SPACE_SPLITTER = Splitter.on(' ').trimResults();
     private Map<Integer,RaceHorse> raceHorses;

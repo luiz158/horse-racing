@@ -5,9 +5,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-/**
-* Created by antmyth on 10/11/14.
-*/
 public class RaceHorse {
     private final int lane;
     private final String name;

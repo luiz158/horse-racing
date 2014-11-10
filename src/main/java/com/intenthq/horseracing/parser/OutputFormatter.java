@@ -9,9 +9,6 @@ import java.util.Map;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.sort;
 
-/**
-* Created by antmyth on 10/11/14.
-*/
 public class OutputFormatter {
     public static final String FIELD_SEPARATOR = ", ";
     public static final String LINE_SEPARATOR = "\n";

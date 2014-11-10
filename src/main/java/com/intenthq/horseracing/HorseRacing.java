@@ -1,16 +1,14 @@
 package com.intenthq.horseracing;
 
 import com.intenthq.horseracing.engine.RacingEngine;
-import com.intenthq.horseracing.entities.Play;
 import com.intenthq.horseracing.entities.RaceHorse;
 import com.intenthq.horseracing.parser.InputParser;
 import com.intenthq.horseracing.parser.OutputFormatter;
 
-import java.util.List;
 import java.util.Map;
 
 public class HorseRacing {
-
+    public static final int FURLONG = 220;
     private final InputParser inputParser;
     private final OutputFormatter outputFormatter;
 
@@ -23,11 +21,9 @@ public class HorseRacing {
         InputParser parser = inputParser.parse(raceInput);
         Map<Integer, RaceHorse> raceHorses = parser.raceHorses();
 
-        RacingEngine racingEngine = new RacingEngine(raceHorses, 220);
-        List<Play> plays = parser.plays();
-        for (int i = 0; i < plays.size() && !racingEngine.isEnded(); i++) {
-            racingEngine.runPlay(plays.get(i));
-        }
+        RacingEngine racingEngine = new RacingEngine(FURLONG);
+        racingEngine.setupCourse(raceHorses);
+        racingEngine.runPlays(parser.plays());
 
         return outputFormatter.format(raceHorses);
     }

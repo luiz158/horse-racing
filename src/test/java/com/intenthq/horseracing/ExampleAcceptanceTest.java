@@ -1,12 +1,12 @@
 package com.intenthq.horseracing;
 
-import org.junit.Ignore;
+import com.intenthq.horseracing.parser.InputParser;
+import com.intenthq.horseracing.parser.OutputFormatter;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 public class ExampleAcceptanceTest {
     private static final String SAMPLE_INPUT = "Star, Dakota, Cheyenne, Misty, Spirit\n"+
             "1 60\n"+
@@ -30,6 +30,8 @@ public class ExampleAcceptanceTest {
 
     @Test
     public void shouldReturnTheExpectedOutputForTheSampleInput(){
-        assertThat(new HorseRacing().startRaceWith(SAMPLE_INPUT),is(SAMPLE_OUTPUT));
+        HorseRacing horseRacing = new HorseRacing(new InputParser(),new OutputFormatter());
+
+        assertThat(horseRacing.startRaceWith(SAMPLE_INPUT),is(SAMPLE_OUTPUT));
     }
 }

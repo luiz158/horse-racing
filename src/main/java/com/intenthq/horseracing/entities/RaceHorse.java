@@ -11,10 +11,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class RaceHorse {
     private final int lane;
     private final String name;
+    private int positionOnTrack;
 
     public RaceHorse(int lane, String name) {
         this.lane = lane;
         this.name = name;
+        positionOnTrack = 0;
     }
 
     public int lane() {
@@ -23,6 +25,14 @@ public class RaceHorse {
 
     public String name() {
         return name;
+    }
+
+    public int positionOnTrack() {
+        return positionOnTrack;
+    }
+
+    public void advance(int yardsToMove) {
+        positionOnTrack += yardsToMove;
     }
 
     @Override
@@ -39,5 +49,4 @@ public class RaceHorse {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
-
 }

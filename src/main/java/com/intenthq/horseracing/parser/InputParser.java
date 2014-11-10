@@ -7,7 +7,9 @@ import com.intenthq.horseracing.entities.RaceHorse;
 import com.intenthq.horseracing.exceptions.InputParsingException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newArrayList;
@@ -18,7 +20,7 @@ import static java.lang.Integer.valueOf;
 */
 public class InputParser {
     private static final Splitter SPACE_SPLITTER = Splitter.on(' ').trimResults();
-    private List<RaceHorse> raceHorses;
+    private Map<Integer,RaceHorse> raceHorses;
     private List<Play> plays;
 
     public InputParser parse(String input) {
@@ -28,13 +30,12 @@ public class InputParser {
         return this;
     }
 
-    private List<RaceHorse> parseRaceHorses(String horsesNamesToParse) {
+    private Map<Integer,RaceHorse> parseRaceHorses(String horsesNamesToParse) {
         List<String> horsesNames = Splitter.on(',').trimResults().splitToList(horsesNamesToParse);
-        ArrayList<RaceHorse> raceHorses = new ArrayList<RaceHorse>();
+        Map<Integer,RaceHorse> raceHorses = new HashMap<Integer,RaceHorse>();
         for (int i = 0; i < horsesNames.size(); i++) {
-            raceHorses.add(new RaceHorse(i + 1, horsesNames.get(i)));
+            raceHorses.put(i + 1, new RaceHorse(i + 1, horsesNames.get(i)));
         }
-
         return raceHorses;
     }
 
@@ -61,7 +62,7 @@ public class InputParser {
         return new Play(playAsIntegers[0], playAsIntegers[1]);
     }
 
-    public List<RaceHorse> raceHorses() {
+    public Map<Integer, RaceHorse> raceHorses() {
         return raceHorses;
     }
 

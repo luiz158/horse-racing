@@ -1,5 +1,7 @@
 package com.intenthq.horseracing;
 
+import com.intenthq.horseracing.parser.InputParser;
+import com.intenthq.horseracing.parser.OutputFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,6 +14,11 @@ public class HorseRacingController {
 
     public static final String INPUT_ATT = "input";
     public static final String OUTPUT_ATT = "output";
+    private final HorseRacing horseRacing;
+
+    public HorseRacingController() {
+        horseRacing = new HorseRacing(new InputParser(), new OutputFormatter());
+    }
 
     @RequestMapping("/horse-racing")
     public String horseRacing(ModelMap model) {
@@ -22,7 +29,7 @@ public class HorseRacingController {
     public String exercise(@RequestParam(value="input", required=false) String input, ModelMap model) {
 		if (!StringUtils.isEmpty(input)) {
             model.addAttribute(INPUT_ATT, input);
-            model.addAttribute(OUTPUT_ATT, "Position, Lane, Horse name\n1, 1, Star\n2, 3, Cheyenne\n3, 4, Misty\n4, 5, Spirit\n5, 2, Dakota");
+            model.addAttribute(OUTPUT_ATT, horseRacing.startRaceWith(input));
 		}
         return "exercise";
     }

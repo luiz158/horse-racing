@@ -18,13 +18,17 @@ public class HorseRacing {
     }
 
     public String startRaceWith(String raceInput) {
-        InputParser parser = inputParser.parse(raceInput);
-        Map<Integer, RaceHorse> raceHorses = parser.raceHorses();
+        try {
+            InputParser parser = inputParser.parse(raceInput);
+            Map<Integer, RaceHorse> raceHorses = parser.raceHorses();
 
-        RacingEngine racingEngine = new RacingEngine(FURLONG);
-        racingEngine.setupCourse(raceHorses);
-        racingEngine.runPlays(parser.plays());
+            RacingEngine racingEngine = new RacingEngine(FURLONG);
+            racingEngine.setupCourse(raceHorses);
+            racingEngine.runPlays(parser.plays());
 
-        return outputFormatter.format(raceHorses);
+            return outputFormatter.format(raceHorses);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 }

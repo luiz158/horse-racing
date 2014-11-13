@@ -26,7 +26,6 @@ public class HorseRacingController {
 
     @RequestMapping("/horse-racing/exercise")
     public String exercise(@RequestParam(value="input", required=false) String input, ModelMap model) {
-        // possibly add more verification should we desire in here.
 		if (!StringUtils.isEmpty(input)) {
             model.addAttribute(INPUT_ATT, input);
             model.addAttribute(OUTPUT_ATT, horseRacingService.processRace(input));

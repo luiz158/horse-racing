@@ -1,9 +1,5 @@
 package com.intenthq.horseracing;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Ordering;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -11,14 +7,14 @@ public class OutputWriter {
 
     private static final String HEADING = "Position, Lane, Horse name\n";
 
-    public String print(final List<Map.Entry<Integer,Horse>> sortedHorseList) {
+    public String print(final List<Map.Entry<Integer, Horse>> sortedHorseList) {
         final StringBuilder sb = new StringBuilder(HEADING);
 
         int position = 0;
         int previousHorseDistanceCovered = 0;
         for (Map.Entry<Integer, Horse> laneEntry : sortedHorseList) {
             position++;
-            if(horseTiedWithPreviousHorse(position, previousHorseDistanceCovered, laneEntry)) {
+            if (horseTiedWithPreviousHorse(position, previousHorseDistanceCovered, laneEntry)) {
                 printLaneEntry(sb, position - 1, laneEntry);
             } else {
                 printLaneEntry(sb, position, laneEntry);
@@ -29,12 +25,14 @@ public class OutputWriter {
         }
 
         removeTrailingNewLine(sb);
-
         return sb.toString();
 
     }
 
-    private boolean horseTiedWithPreviousHorse(final int position, final int previousHorseDistanceCovered, final Map.Entry<Integer, Horse> laneEntry) {
+    private boolean horseTiedWithPreviousHorse(final int position,
+                                               final int previousHorseDistanceCovered,
+                                               final Map.Entry<Integer, Horse> laneEntry) {
+
         return previousHorseDistanceCovered == laneEntry.getValue().getYardsCovered() && position != 1;
     }
 

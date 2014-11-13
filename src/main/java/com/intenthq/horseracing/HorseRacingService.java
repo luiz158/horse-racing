@@ -9,8 +9,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 @Service
 public class HorseRacingService {
     private InputProcessor inputProcessor;

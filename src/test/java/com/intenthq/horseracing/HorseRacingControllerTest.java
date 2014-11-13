@@ -2,15 +2,14 @@ package com.intenthq.horseracing;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
 
-import java.io.FilterInputStream;
-import java.io.FilterReader;
-import java.io.LineNumberReader;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 public class HorseRacingControllerTest
 {
@@ -39,10 +38,14 @@ public class HorseRacingControllerTest
 
 	private HorseRacingController horseRacingController;
 
+    @Mock
+    private HorseRacingService horseRacingService;
+
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		horseRacingController = new HorseRacingController();
+        when(horseRacingService.processRace(anyString())).thenReturn(SAMPLE_OUTPUT);
+		horseRacingController = new HorseRacingController(horseRacingService);
 	}
 
 	@Test
@@ -82,4 +85,5 @@ public class HorseRacingControllerTest
 		final String output = (String) model.get(HorseRacingController.OUTPUT_ATT);
 		assertThat(output, is(SAMPLE_OUTPUT));
 	}
+
 }

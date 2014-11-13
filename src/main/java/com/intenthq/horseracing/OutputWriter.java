@@ -1,26 +1,25 @@
 package com.intenthq.horseracing;
 
 import java.util.List;
-import java.util.Map;
 
 public class OutputWriter {
 
     private static final String HEADING = "Position, Lane, Horse name\n";
 
-    public String print(final List<Map.Entry<Integer, Horse>> sortedHorseList) {
+    public String print(final List<Horse> sortedHorseList) {
         final StringBuilder sb = new StringBuilder(HEADING);
 
         int position = 0;
         int previousHorseDistanceCovered = 0;
-        for (Map.Entry<Integer, Horse> laneEntry : sortedHorseList) {
+        for (Horse horse : sortedHorseList) {
             position++;
-            if (horseTiedWithPreviousHorse(position, previousHorseDistanceCovered, laneEntry)) {
-                printLaneEntry(sb, position - 1, laneEntry);
+            if (horseTiedWithPreviousHorse(position, previousHorseDistanceCovered, horse)) {
+                printLaneEntry(sb, position - 1, horse);
             } else {
-                printLaneEntry(sb, position, laneEntry);
+                printLaneEntry(sb, position, horse);
             }
 
-            previousHorseDistanceCovered = laneEntry.getValue().getYardsCovered();
+            previousHorseDistanceCovered = horse.getYardsCovered();
 
         }
 
@@ -31,15 +30,15 @@ public class OutputWriter {
 
     private boolean horseTiedWithPreviousHorse(final int position,
                                                final int previousHorseDistanceCovered,
-                                               final Map.Entry<Integer, Horse> laneEntry) {
+                                               final Horse horse) {
 
-        return previousHorseDistanceCovered == laneEntry.getValue().getYardsCovered() && position != 1;
+        return previousHorseDistanceCovered == horse.getYardsCovered() && position != 1;
     }
 
-    private void printLaneEntry(final StringBuilder sb, final int position, final Map.Entry<Integer, Horse> laneEntry) {
+    private void printLaneEntry(final StringBuilder sb, final int position, final Horse horse) {
         sb.append(String.valueOf(position)).append(", ");
-        sb.append(laneEntry.getKey()).append(", ");
-        sb.append(laneEntry.getValue().getHorseName()).append("\n");
+        sb.append(horse.getLane()).append(", ");
+        sb.append(horse.getHorseName()).append("\n");
     }
 
     private void removeTrailingNewLine(final StringBuilder sb) {

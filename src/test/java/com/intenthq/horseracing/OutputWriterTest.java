@@ -25,8 +25,8 @@ public class OutputWriterTest {
 
     @Test
     public void printShouldPrintOutCorrectOutputForOneHorse() {
-        List<Map.Entry<Integer, Horse>> horseResultList =
-                newArrayList(createHorseEntry(2, "Bolter", 200));
+        List<Horse> horseResultList =
+                newArrayList(new Horse(2, "Bolter", 200));
 
 
         final String actual = outputWriter.print(horseResultList);
@@ -36,7 +36,7 @@ public class OutputWriterTest {
 
     @Test
     public void printShouldJustPrintHeaderIfEmptyList() throws Exception {
-        List<Map.Entry<Integer, Horse>> noHorses = newArrayList();
+        List<Horse> noHorses = newArrayList();
 
         String actual = outputWriter.print(noHorses);
 
@@ -46,10 +46,10 @@ public class OutputWriterTest {
     @Test
     public void printShouldPrintOutCorrectOutputForMultipleHorsesInCorrectOrder() {
 
-        List<Map.Entry<Integer, Horse>> horseResultList =
-                newArrayList(createHorseEntry(2, "Bolter", 200),
-                        createHorseEntry(3, "AlwaysSecond", 150),
-                        createHorseEntry(1, "SlowCoach", 100));
+        List<Horse> horseResultList =
+                newArrayList(new Horse(2, "Bolter", 200),
+                        new Horse(3, "AlwaysSecond", 150),
+                        new Horse(1, "SlowCoach", 100));
 
         final String actual = outputWriter.print(horseResultList);
 
@@ -59,12 +59,12 @@ public class OutputWriterTest {
     @Test
     public void printShouldPrintOutCorrectOutputForHorsesThatDraw() {
 
-        List<Map.Entry<Integer, Horse>> horseResultList =
+        List<Horse> horseResultList =
                 newArrayList(
-                        createHorseEntry(2, "Bolter", 200),
-                        createHorseEntry(1, "Tied 2", 100),
-                        createHorseEntry(3, "AlwaysSecond", 100),
-                        createHorseEntry(4, "Should Be Fourth", 50));
+                        new Horse(2, "Bolter", 200),
+                        new Horse(1, "Tied 2", 100),
+                        new Horse(3, "AlwaysSecond", 100),
+                        new Horse(4, "Should Be Fourth", 50));
 
 
         final String actual = outputWriter.print(horseResultList);

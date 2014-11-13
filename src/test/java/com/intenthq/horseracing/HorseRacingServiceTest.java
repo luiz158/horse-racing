@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +20,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class HorseRacingServiceTest {
 
-    public static final Horse STAR = new Horse("Star", 220);
-    public static final Horse DAKOTA = new Horse("Dakota", 10);
-    public static final Horse CHEYENNE = new Horse("Cheyenne", 125);
-    public static final Horse MISTY = new Horse("Misty", 50);
-    public static final Horse SPIRIT = new Horse("Spirit", 30);
+    public static final Horse STAR = new Horse(1, "Star", 220);
+    public static final Horse DAKOTA = new Horse(2, "Dakota", 10);
+    public static final Horse CHEYENNE = new Horse(3, "Cheyenne", 125);
+    public static final Horse MISTY = new Horse(4, "Misty", 50);
+    public static final Horse SPIRIT = new Horse(5, "Spirit", 30);
 
     private HorseRacingService horseRacingService;
     @Mock
@@ -75,7 +74,7 @@ public class HorseRacingServiceTest {
     @Test
     public void processRaceShouldPassHorsesFromGreatestDistanceDescToTheOutputWriter() throws Exception {
         final Map<Integer, Horse> horses = buildTestHorsesMap();
-        List<Map.Entry<Integer,Horse>> sortedHorseList = getSortedHorses();
+        List<Horse> sortedHorseList = getSortedHorses();
 
         when(inputProcessor.parse(SAMPLE_INPUT)).thenReturn(horses);
 
@@ -85,13 +84,13 @@ public class HorseRacingServiceTest {
 
     }
 
-    private List<Map.Entry<Integer,Horse>> getSortedHorses() {
+    private List<Horse> getSortedHorses() {
         return newArrayList(
-                createHorseEntry(1, STAR),
-                createHorseEntry(3, CHEYENNE),
-                createHorseEntry(4, MISTY),
-                createHorseEntry(5, SPIRIT),
-                createHorseEntry(2, DAKOTA)
+                STAR,
+                CHEYENNE,
+                MISTY,
+                SPIRIT,
+                DAKOTA
         );
     }
 

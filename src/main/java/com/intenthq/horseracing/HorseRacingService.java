@@ -5,9 +5,7 @@ import com.google.common.collect.Ordering;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class HorseRacingService {
@@ -24,21 +22,22 @@ public class HorseRacingService {
 
     public String processRace(final String raceInput) {
         final Map<Integer, Horse> horses = inputProcessor.parse(raceInput);
-        List<Map.Entry<Integer, Horse>> sortedHorseList = sortHorses(horses);
+        List<Horse> sortedHorseList = sortHorses(horses.values());
         return outputWriter.print(sortedHorseList);
     }
 
-    private List<Map.Entry<Integer, Horse>> sortHorses(final Map<Integer, Horse> horses) {
-        final List<Map.Entry<Integer, Horse>> laneList = Lists.newArrayList(horses.entrySet());
-        Collections.sort(laneList, byDistance());
-        return laneList;
+    private List<Horse> sortHorses(final Collection<Horse> horses) {
+        final List<Horse> horseList = Lists.newArrayList(horses);
+        Collections.sort(horseList, byDistance());
+
+        return horseList;
     }
 
-    private Ordering<Map.Entry<Integer, Horse>> byDistance() {
-        return new Ordering<Map.Entry<Integer, Horse>>() {
+    private Ordering<Horse> byDistance() {
+        return new Ordering<Horse>() {
             @Override
-            public int compare(final Map.Entry<Integer, Horse> left, final Map.Entry<Integer, Horse> right) {
-                return right.getValue().getYardsCovered() - left.getValue().getYardsCovered();
+            public int compare(final Horse left, final Horse right) {
+                return right.getYardsCovered() - left.getYardsCovered();
             }
         };
     }

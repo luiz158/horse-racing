@@ -6,9 +6,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
+import static com.intenthq.horseracing.TestHelper.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
@@ -16,6 +20,12 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HorseRacingServiceTest {
+
+    public static final Horse STAR = new Horse("Star", 220);
+    public static final Horse DAKOTA = new Horse("Dakota", 10);
+    public static final Horse CHEYENNE = new Horse("Cheyenne", 125);
+    public static final Horse MISTY = new Horse("Misty", 50);
+    public static final Horse SPIRIT = new Horse("Spirit", 30);
 
     private HorseRacingService horseRacingService;
     @Mock
@@ -51,29 +61,49 @@ public class HorseRacingServiceTest {
     }
 
     @Test
-    public void processRaceShouldReturnFormattedOutputDataForOneHorse(){
+    public void processRaceShouldReturnOutputFromOutputWriter(){
         final Map<Integer, Horse> horses = buildTestHorsesMap();
 
         when(inputProcessor.parse(SAMPLE_INPUT)).thenReturn(horses);
-        when(outputWriter.print(horses)).thenReturn(SAMPLE_OUTPUT);
+        when(outputWriter.print(getSortedHorses())).thenReturn(SAMPLE_OUTPUT);
 
         final String actual = horseRacingService.processRace(SAMPLE_INPUT);
 
-        verify(inputProcessor).parse(SAMPLE_INPUT);
-        verify(outputWriter).print(horses);
-
         assertThat(actual, equalTo(SAMPLE_OUTPUT));
+    }
+
+    @Test
+    public void processRaceShouldPassHorsesFromGreatestDistanceDescToTheOutputWriter() throws Exception {
+        final Map<Integer, Horse> horses = buildTestHorsesMap();
+        List<Map.Entry<Integer,Horse>> sortedHorseList = getSortedHorses();
+
+        when(inputProcessor.parse(SAMPLE_INPUT)).thenReturn(horses);
+
+        horseRacingService.processRace(SAMPLE_INPUT);
+
+        verify(outputWriter).print(sortedHorseList);
 
     }
+
+    private List<Map.Entry<Integer,Horse>> getSortedHorses() {
+        return newArrayList(
+                createHorseEntry(1, STAR),
+                createHorseEntry(3, CHEYENNE),
+                createHorseEntry(4, MISTY),
+                createHorseEntry(5, SPIRIT),
+                createHorseEntry(2, DAKOTA)
+        );
+    }
+
 
     private Map<Integer, Horse> buildTestHorsesMap() {
         final Map<Integer, Horse> horses = newHashMap();
 
-        horses.put(new Integer(1), new Horse("Star"));
-        horses.put(new Integer(2), new Horse("Dakota"));
-        horses.put(new Integer(3), new Horse("Cheyenne"));
-        horses.put(new Integer(4), new Horse("Misty"));
-        horses.put(new Integer(5), new Horse("Spirit"));
+        horses.put(new Integer(1), STAR);
+        horses.put(new Integer(2), DAKOTA);
+        horses.put(new Integer(3), CHEYENNE);
+        horses.put(new Integer(4), MISTY);
+        horses.put(new Integer(5), SPIRIT);
 
         return horses;
     }

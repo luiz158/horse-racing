@@ -15,6 +15,6 @@ public class NoValidHorsesException extends Exception implements HorseRacingInpu
 
     @Override
     public String getMessage() {
-        return this.getMessage();
+        return super.getMessage();
     }
 }

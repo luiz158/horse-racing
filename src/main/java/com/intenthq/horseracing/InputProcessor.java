@@ -1,5 +1,6 @@
 package com.intenthq.horseracing;
 
+import com.google.common.base.Splitter;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -27,10 +28,12 @@ public class InputProcessor {
         if (scan.hasNextLine()) {
             String horseLanesString = scan.nextLine();
             validator.validateHorses(horseLanesString);
-            String[] horseNames = splitHorsesOnCommas(horseLanesString);
 
-            for (int i = 0; i < horseNames.length; i++) {
-                addHorseToMap(horseMap, horseNames[i], i);
+            Iterable<String> horseNames = splitHorsesOnCommas(horseLanesString);
+            int lane = 1;
+            for (String horseName : horseNames) {
+                addHorseToMap(horseMap, horseName, lane);
+                lane++;
             }
         }
 
@@ -56,12 +59,11 @@ public class InputProcessor {
         return horseMap;
     }
 
-    private String[] splitHorsesOnCommas(String horseLanesString) {
-        return horseLanesString.split("\\s*,\\s*");
+    private Iterable<String> splitHorsesOnCommas(String horseLanesString) {
+        return Splitter.on(",").trimResults().split(horseLanesString);
     }
 
-    private void addHorseToMap(Map<Integer, Horse> horseMap, String horseName, int i) {
-        int lane = i + 1;
+    private void addHorseToMap(Map<Integer, Horse> horseMap, String horseName, int lane) {
         Integer horseKey = new Integer(lane);
         Horse horse = new Horse(lane, horseName);
         horseMap.put(horseKey, horse);

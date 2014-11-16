@@ -16,6 +16,6 @@ public class BallTossInvalidException extends Exception implements HorseRacingIn
 
     @Override
     public String getMessage() {
-        return this.getMessage();
+        return super.getMessage();
     }
 }

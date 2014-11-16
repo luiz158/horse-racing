@@ -11,7 +11,6 @@ import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
-import static com.intenthq.horseracing.TestHelper.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
@@ -20,11 +19,17 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class HorseRacingServiceTest {
 
-    public static final Horse STAR = new Horse(1, "Star", 220);
-    public static final Horse DAKOTA = new Horse(2, "Dakota", 10);
-    public static final Horse CHEYENNE = new Horse(3, "Cheyenne", 125);
-    public static final Horse MISTY = new Horse(4, "Misty", 50);
-    public static final Horse SPIRIT = new Horse(5, "Spirit", 30);
+    public static final int LANE_STAR = 1;
+    public static final int LANE_DAKOTA = 2;
+    public static final int LANE_CHEYENNE = 3;
+    public static final int LANE_MISTY = 4;
+    public static final int LANE_SPIRIT = 5;
+
+    public static final Horse STAR = new Horse(LANE_STAR, "Star", 220);
+    public static final Horse DAKOTA = new Horse(LANE_DAKOTA, "Dakota", 10);
+    public static final Horse CHEYENNE = new Horse(LANE_CHEYENNE, "Cheyenne", 125);
+    public static final Horse MISTY = new Horse(LANE_MISTY, "Misty", 50);
+    public static final Horse SPIRIT = new Horse(LANE_SPIRIT, "Spirit", 30);
 
     private HorseRacingService horseRacingService;
     @Mock
@@ -32,25 +37,25 @@ public class HorseRacingServiceTest {
     @Mock
     private OutputWriter outputWriter;
 
-    private static final String SAMPLE_INPUT = "Star, Dakota, Cheyenne, Misty, Spirit\n"+
-            "1 60\n"+
-            "3 5\n"+
-            "1 60\n"+
-            "4 5\n"+
-            "4 10\n"+
-            "2 5\n"+
-            "5 10\n"+
-            "1 60\n"+
-            "3 20\n"+
-            "7 10\n"+
-            "1 40\n"+
+    private static final String SAMPLE_INPUT = "Star, Dakota, Cheyenne, Misty, Spirit\n" +
+            "1 60\n" +
+            "3 5\n" +
+            "1 60\n" +
+            "4 5\n" +
+            "4 10\n" +
+            "2 5\n" +
+            "5 10\n" +
+            "1 60\n" +
+            "3 20\n" +
+            "7 10\n" +
+            "1 40\n" +
             "2 60";
 
-    private static final String SAMPLE_OUTPUT = "Position, Lane, Horse name\n"+
-            "1, 1, Star\n"+
-            "2, 3, Cheyenne\n"+
-            "3, 4, Misty\n"+
-            "4, 5, Spirit\n"+
+    private static final String SAMPLE_OUTPUT = "Position, Lane, Horse name\n" +
+            "1, 1, Star\n" +
+            "2, 3, Cheyenne\n" +
+            "3, 4, Misty\n" +
+            "4, 5, Spirit\n" +
             "5, 2, Dakota";
 
 
@@ -60,7 +65,7 @@ public class HorseRacingServiceTest {
     }
 
     @Test
-    public void processRaceShouldReturnOutputFromOutputWriter(){
+    public void processRaceShouldReturnOutputFromOutputWriter() {
         final Map<Integer, Horse> horses = buildTestHorsesMap();
 
         when(inputProcessor.parse(SAMPLE_INPUT)).thenReturn(horses);
@@ -98,11 +103,11 @@ public class HorseRacingServiceTest {
     private Map<Integer, Horse> buildTestHorsesMap() {
         final Map<Integer, Horse> horses = newHashMap();
 
-        horses.put(new Integer(1), STAR);
-        horses.put(new Integer(2), DAKOTA);
-        horses.put(new Integer(3), CHEYENNE);
-        horses.put(new Integer(4), MISTY);
-        horses.put(new Integer(5), SPIRIT);
+        horses.put(new Integer(LANE_STAR), STAR);
+        horses.put(new Integer(LANE_DAKOTA), DAKOTA);
+        horses.put(new Integer(LANE_CHEYENNE), CHEYENNE);
+        horses.put(new Integer(LANE_MISTY), MISTY);
+        horses.put(new Integer(LANE_SPIRIT), SPIRIT);
 
         return horses;
     }

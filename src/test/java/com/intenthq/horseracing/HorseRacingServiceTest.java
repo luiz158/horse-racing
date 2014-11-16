@@ -65,10 +65,10 @@ public class HorseRacingServiceTest {
     }
 
     @Test
-    public void processRaceShouldReturnOutputFromOutputWriter() {
+    public void processRaceShouldReturnOutputFromOutputWriter() throws NoValidHorsesException {
         final Map<Integer, Horse> horses = buildTestHorsesMap();
 
-        when(inputProcessor.parse(SAMPLE_INPUT)).thenReturn(horses);
+        when(inputProcessor.process(SAMPLE_INPUT)).thenReturn(horses);
         when(outputWriter.print(getSortedHorses())).thenReturn(SAMPLE_OUTPUT);
 
         final String actual = horseRacingService.processRace(SAMPLE_INPUT);
@@ -81,7 +81,7 @@ public class HorseRacingServiceTest {
         final Map<Integer, Horse> horses = buildTestHorsesMap();
         List<Horse> sortedHorseList = getSortedHorses();
 
-        when(inputProcessor.parse(SAMPLE_INPUT)).thenReturn(horses);
+        when(inputProcessor.process(SAMPLE_INPUT)).thenReturn(horses);
 
         horseRacingService.processRace(SAMPLE_INPUT);
 

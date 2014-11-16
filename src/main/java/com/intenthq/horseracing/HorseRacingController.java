@@ -26,10 +26,14 @@ public class HorseRacingController {
 
     @RequestMapping("/horse-racing/exercise")
     public String exercise(@RequestParam(value="input", required=false) String input, ModelMap model) {
-		if (!StringUtils.isEmpty(input)) {
-            model.addAttribute(INPUT_ATT, input);
-            model.addAttribute(OUTPUT_ATT, horseRacingService.processRace(input));
-		}
+        try {
+            if (!StringUtils.isEmpty(input)) {
+                model.addAttribute(INPUT_ATT, input);
+                model.addAttribute(OUTPUT_ATT, horseRacingService.processRace(input));
+            }
+        } catch (NoValidHorsesException e) {
+            e.printStackTrace();
+        }
         return "exercise";
     }
 

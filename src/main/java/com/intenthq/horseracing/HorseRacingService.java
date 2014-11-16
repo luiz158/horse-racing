@@ -20,20 +20,20 @@ public class HorseRacingService {
         this.outputWriter = outputWriter;
     }
 
-    public String processRace(final String raceInput) {
-        final Map<Integer, Horse> horses = inputProcessor.parse(raceInput);
+    public String processRace(final String raceInput) throws NoValidHorsesException {
+        final Map<Integer, Horse> horses = inputProcessor.process(raceInput);
         List<Horse> sortedHorseList = sortHorses(horses.values());
         return outputWriter.print(sortedHorseList);
     }
 
     private List<Horse> sortHorses(final Collection<Horse> horses) {
         final List<Horse> horseList = Lists.newArrayList(horses);
-        Collections.sort(horseList, byDistance());
+        Collections.sort(horseList, byDistanceDescending());
 
         return horseList;
     }
 
-    private Ordering<Horse> byDistance() {
+    private Ordering<Horse> byDistanceDescending() {
         return new Ordering<Horse>() {
             @Override
             public int compare(final Horse left, final Horse right) {

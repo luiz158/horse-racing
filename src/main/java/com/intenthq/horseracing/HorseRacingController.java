@@ -1,5 +1,6 @@
 package com.intenthq.horseracing;
 
+import com.intenthq.horseracing.exception.NoValidHorsesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,7 +33,7 @@ public class HorseRacingController {
                 model.addAttribute(OUTPUT_ATT, horseRacingService.processRace(input));
             }
         } catch (NoValidHorsesException e) {
-            e.printStackTrace();
+            model.addAttribute(OUTPUT_ATT, e.getMessage());
         }
         return "exercise";
     }

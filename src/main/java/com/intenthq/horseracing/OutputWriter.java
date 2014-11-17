@@ -1,13 +1,19 @@
 package com.intenthq.horseracing;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class OutputWriter {
 
     private static final String HEADING = "Position, Lane, Horse name\n";
     public static final int FIRST = 1;
     public static final String COMMA_DELIMITER = ", ";
     public static final String NEW_LINE_DELIMITER = "\n";
+
+    public OutputWriter() {
+    }
 
     public String print(final List<Horse> sortedHorseList) {
         final StringBuilder stringBuilder = new StringBuilder(HEADING);

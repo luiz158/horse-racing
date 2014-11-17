@@ -1,6 +1,10 @@
 package com.intenthq.horseracing;
 
 import com.google.common.base.Splitter;
+import com.intenthq.horseracing.exception.BallTossInvalidException;
+import com.intenthq.horseracing.exception.NoValidHorsesException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -15,6 +19,7 @@ public class InputProcessor {
     public static final int BALL_TOSS_LANE_INDEX = 0;
     private final InputValidator validator;
 
+    @Autowired
     public InputProcessor(InputValidator validator) {
         this.validator = validator;
     }
@@ -40,7 +45,7 @@ public class InputProcessor {
         while (scan.hasNextLine() && !raceFinished) {
             try {
                 String ballTossString = scan.nextLine();
-                validator.validateBallToss(ballTossString);
+                validator.validateBallToss(ballTossString, horseMap.size());
                 String[] ballToss = ballTossString.split("\\s");
 
                 Horse horse = horseMap.get(Integer.valueOf(ballToss[BALL_TOSS_LANE_INDEX]));
@@ -56,6 +61,7 @@ public class InputProcessor {
             }
         }
 
+        scan.close();
         return horseMap;
     }
 

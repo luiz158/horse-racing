@@ -25,14 +25,14 @@ public class HorseTest {
     }
 
     @Test
-    public void isFinishedShouldReturnFalseIfYardsCoveredIsLessThanOrEqualToAFurlong() throws Exception {
-        horse.addYards(220);
+    public void isFinishedShouldReturnFalseIfYardsCoveredIsLessThanAFurlong() throws Exception {
+        horse.addYards(219);
         assertFalse(horse.isFinished());
     }
 
     @Test
-    public void isFinishedShouldReturnTrueIfYardsCoveredIsMoreThanAFurlong() throws Exception {
-        horse.addYards(221);
+    public void isFinishedShouldReturnTrueIfYardsCoveredIsAFurlong() throws Exception {
+        horse.addYards(220);
         assertTrue(horse.isFinished());
     }
 }

@@ -1,5 +1,7 @@
 package com.intenthq.horseracing;
 
+import com.intenthq.horseracing.exception.BallTossInvalidException;
+import com.intenthq.horseracing.exception.NoValidHorsesException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +72,7 @@ public class InputProcessorTest {
     @Test
     public void processShouldSendBallTossLineToValidateBallTossMethod() throws Exception {
         inputProcessor.process("Star, buddy, Ace\n1 60\n");
-        verify(validator).validateBallToss("1 60");
+        verify(validator).validateBallToss("1 60", 3);
     }
 
     @Test
@@ -90,7 +92,7 @@ public class InputProcessorTest {
         expected.put(new Integer(1), new Horse(1, "Star", 100));
         expected.put(new Integer(2), new Horse(2, "Bar", 10));
 
-        doThrow(BallTossInvalidException.class).when(validator).validateBallToss(eq("7 43"));
+        doThrow(BallTossInvalidException.class).when(validator).validateBallToss(eq("7 43"), eq(2));
 
         Map<Integer, Horse> actual = inputProcessor.process("Star, Bar\n1 60\n7 43\n1 20\n2 10\n1 20\n");
 
@@ -98,12 +100,12 @@ public class InputProcessorTest {
     }
 
     @Test
-    public void processShouldReturnMapWhenAHorseGoesPastAFurlong() throws Exception {
+    public void processShouldReturnMapWhenAHorseGoesAFurlong() throws Exception {
         Map<Integer, Horse> expected = newHashMap();
-        expected.put(new Integer(1), new Horse(1, "Star", 230));
+        expected.put(new Integer(1), new Horse(1, "Star", 220));
         expected.put(new Integer(2), new Horse(2, "Bar", 20));
 
-        Map<Integer, Horse> actual = inputProcessor.process("Star, Bar\n1 200\n1 20\n2 20\n1 10\n2 20\n1 5\n");
+        Map<Integer, Horse> actual = inputProcessor.process("Star, Bar\n1 200\n2 20\n1 20\n2 10\n2 20\n1 5\n");
 
         assertThat(actual, equalTo(expected));
     }

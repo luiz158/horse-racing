@@ -10,6 +10,7 @@ import static org.junit.Assert.assertThat;
 
 @Ignore
 public class HorseRacingIntegrationTest {
+
     private static final String SAMPLE_INPUT = "Star, Dakota, Cheyenne, Misty, Spirit\n"+
             "1 60\n"+
             "3 5\n"+
@@ -54,6 +55,14 @@ public class HorseRacingIntegrationTest {
         String expectedViewName = horseRacingController.exercise(SAMPLE_INPUT, modelMap);
 
         assertThat((String) modelMap.get("output"), equalTo(SAMPLE_OUTPUT));
-        assertThat(expectedViewName, equalTo("excercise"));
+        assertThat(expectedViewName, equalTo("exercise"));
+    }
+
+    @Test
+    public void horseRacingIntegrationTestTwo() throws Exception {
+        String expectedViewName = horseRacingController.exercise("Diaby, Ramsey\n2 60\n1 10", modelMap);
+
+        assertThat((String) modelMap.get("output"), equalTo("Position, Lane, Horse name\n1, 2, Ramsey\n2, 1, Diaby"));
+        assertThat(expectedViewName, equalTo("exercise"));
     }
 }

@@ -2,6 +2,7 @@ package com.intenthq.horseracing;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+import com.intenthq.horseracing.exception.NoValidHorsesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

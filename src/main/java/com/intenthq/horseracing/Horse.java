@@ -35,7 +35,7 @@ public class Horse {
     }
 
     public boolean isFinished() {
-        return yardsCovered > YARDS_IN_FURLONG;
+        return yardsCovered >= YARDS_IN_FURLONG;
     }
 
 

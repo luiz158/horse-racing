@@ -15,9 +15,8 @@ public class InputValidator {
 
     public static final int MIN_NO_HORSES = 1;
     public static final int MAX_NO_HORSES = 7;
-    public static final String BALL_TOSS_REGEX = "^\\s*([%s-%s])\\s+(5|10|20|40|60)\\s*$";
+    public static final String BALL_TOSS_REGEX = "^([%s-%s]) (5|10|20|40|60)$";
     public static final int LANE_INDEX = 1;
-    private static final String HORSE_DELIMITER = ",";
 
     public InputValidator() {
     }
@@ -28,7 +27,7 @@ public class InputValidator {
             throw new NoValidHorsesException("noValidHorses", format("No Horses in race"));
         }
 
-        String[] horseNames = horseString.split(HORSE_DELIMITER);
+        String[] horseNames = horseString.split(",");
 
         if (horseNames.length < MIN_NO_HORSES) {
             throw new NoValidHorsesException("noValidHorses", format("No Horses in race"));

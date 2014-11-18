@@ -116,31 +116,4 @@ public class InputValidatorTest {
 
         assertThat(actual.getMessage(), equalTo("No Horse in lane: 2"));
     }
-
-    @Test
-    public void validateBallTossShouldTIgnoreWhiteSpaceBeforeLane()  {
-        try {
-            inputValidator.validateBallToss("   1 60", 1);
-        } catch (BallTossInvalidException e) {
-            fail("Exception should not have been thrown: " + e.getMessage());
-        }
-    }
-
-    @Test
-    public void validateBallTossShouldTIgnoreWhiteSpaceAfterThrowValue()  {
-        try {
-            inputValidator.validateBallToss("1 60  ", 1);
-        } catch (BallTossInvalidException e) {
-            fail("Exception should not have been thrown: " + e.getMessage());
-        }
-    }
-
-    @Test
-    public void validateBallTossShouldTHandleMoreThanOneWhiteSpaceBetweenValues()  {
-        try {
-            inputValidator.validateBallToss("1   60", 1);
-        } catch (BallTossInvalidException e) {
-            fail("Exception should not have been thrown: " + e.getMessage());
-        }
-    }
 }

@@ -31,6 +31,18 @@ public class InputValidatorTest {
     }
 
     @Test
+    public void validateHorsesShouldThrowExceptionIfJustCommas() {
+        NoValidHorsesException actual = null;
+        try {
+            inputValidator.validateHorses(",,,,");
+        } catch (NoValidHorsesException e) {
+            actual = e;
+        }
+
+        assertThat(actual.getMessage(), equalTo("No Horses in race"));
+    }
+
+    @Test
     public void validateHorsesShouldThrowExceptionIfMoreThanSevenHorses() {
         NoValidHorsesException actual = null;
 

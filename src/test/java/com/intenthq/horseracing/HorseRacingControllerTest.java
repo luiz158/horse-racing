@@ -1,14 +1,17 @@
 package com.intenthq.horseracing;
 
+import com.intenthq.horseracing.exception.NoValidHorsesException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 public class HorseRacingControllerTest
@@ -86,4 +89,11 @@ public class HorseRacingControllerTest
 		assertThat(output, is(SAMPLE_OUTPUT));
 	}
 
+    @Test
+    public void exerciseShouldPutErrorIntoOutputIfHorseRacingServiceThrowsException() throws Exception {
+        doThrow(new NoValidHorsesException("errorCode", "I predict a riot")).when(horseRacingService).processRace(anyString());
+        horseRacingController.exercise(SAMPLE_INPUT, model);
+        final String output = (String) model.get(HorseRacingController.OUTPUT_ATT);
+        assertThat(output, is("I predict a riot"));
+    }
 }

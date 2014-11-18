@@ -53,7 +53,6 @@ public class OutputWriterTest {
 
     @Test
     public void printShouldPrintOutCorrectOutputForHorsesThatDraw() {
-
         List<Horse> horseResultList =
                 newArrayList(
                         new Horse(2, "Bolter", 200),
@@ -65,5 +64,20 @@ public class OutputWriterTest {
         final String actual = outputWriter.print(horseResultList);
 
         assertThat(actual, equalTo("Position, Lane, Horse name\n1, 2, Bolter\n2, 1, Tied 2\n2, 3, AlwaysSecond\n4, 4, Should Be Fourth"));
+    }
+
+    @Test
+    public void printShouldPrintOutCorrectOutputForFourHorsesThatDraw() {
+        List<Horse> horseResultList =
+                newArrayList(
+                        new Horse(2, "Bolter", 200),
+                        new Horse(1, "Tied 2", 200),
+                        new Horse(3, "AlwaysFirst", 200),
+                        new Horse(4, "Should Be First", 200));
+
+
+        final String actual = outputWriter.print(horseResultList);
+
+        assertThat(actual, equalTo("Position, Lane, Horse name\n1, 2, Bolter\n1, 1, Tied 2\n1, 3, AlwaysFirst\n1, 4, Should Be First"));
     }
 }

@@ -20,16 +20,16 @@ public class OutputWriter {
 
         int position = 0;
         int previousHorseDistanceCovered = 0;
+        int previousHorsePosition = 1;
         for (Horse horse : sortedHorseList) {
             position++;
             if (horseTiedWithPreviousHorse(position, previousHorseDistanceCovered, horse)) {
-                printLaneEntry(stringBuilder, position - 1, horse);
+                printLaneEntry(stringBuilder, previousHorsePosition, horse);
             } else {
                 printLaneEntry(stringBuilder, position, horse);
+                previousHorsePosition = position;
             }
-
             previousHorseDistanceCovered = horse.getYardsCovered();
-
         }
 
         return stringBuilder.toString().trim();
